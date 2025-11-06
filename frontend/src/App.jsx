@@ -1,25 +1,32 @@
-import { useState } from 'react'
-import './App.css'
+import { useState, useEffect } from "react";
+import LoginForm from "./components/LoginForm";
+import TaskList from "./components/TaskList";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [token, setToken] = useState(localStorage.getItem("access"));
+
+  useEffect(() => {
+    const syncToken = () => setToken(localStorage.getItem("access"));
+    window.addEventListener("storage", syncToken);
+    return () => window.removeEventListener("storage", syncToken);
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    setToken(null);
+  }
 
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ padding: "2rem" }}>
+      {!token ? (
+        <LoginForm onLogin={setToken} />
+      ) : (
+        <>
+          <button onClick={handleLogout}>Logout</button>
+          <TaskList token={token} onLogout={handleLogout} />
+        </>
+      )}
+    </div>
+  );
 }
-
-export default App
