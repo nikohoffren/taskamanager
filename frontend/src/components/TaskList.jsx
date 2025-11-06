@@ -38,8 +38,13 @@ export default function TaskList({ token, onLogout }) {
     const endpoint = editingTask ? `tasks/${editingTask.id}/` : "tasks/";
     const method = editingTask ? "PUT" : "POST";
 
+    const formData = {
+      ...form,
+      deadline: form.deadline || null,
+    };
+
     try {
-      await apiRequest(endpoint, method, form, token, onLogout);
+      await apiRequest(endpoint, method, formData, token, onLogout);
       setForm({
         title: "",
         description: "",
@@ -70,7 +75,7 @@ export default function TaskList({ token, onLogout }) {
       description: task.description,
       status: task.status,
       priority: task.priority,
-      deadline: task.deadline,
+      deadline: task.deadline || "",
     });
   }
 
@@ -174,16 +179,17 @@ export default function TaskList({ token, onLogout }) {
           </div>
 
           <div className="flex-1 min-w-0">
-            <label className="block mb-1.5 text-sm opacity-80">Deadline</label>
+            <label className="block mb-1.5 text-sm opacity-80">
+              Deadline
+            </label>
             <input
               type="date"
               name="deadline"
-              value={form.deadline}
+              value={form.deadline || ""}
               onChange={handleChange}
               className="w-full px-2.5 py-2 mb-4 border border-black/20 dark:border-white/20 rounded bg-white/80 dark:bg-white/5 text-inherit font-inherit text-base box-border focus:outline-none focus:border-primary"
               lang="fi"
               min={new Date().toISOString().split("T")[0]}
-              required
             />
           </div>
         </div>
