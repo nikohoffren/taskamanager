@@ -1,0 +1,19 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*.log
+*.pot
+*.pyc
+
+# VENV
+venv/
+.env
+.env.local
+
+# IDE
+.vscode/
+
+# React
+frontend/node_modules/
+frontend/build/
+frontend/dist/
