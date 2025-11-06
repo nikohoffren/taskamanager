@@ -115,7 +115,7 @@ POST http://localhost:8000/api/token/
 ### JWT-token
 
 - **POST** `/api/token/` - Hae access ja refresh token
-- **POST** `/api/token/refresh/` - Päivitä access token jos se on vanhentunut
+- **POST** `/api/token/refresh/` - Päivitä access token refresh tokenin avulla, jos se on vanhentunut
 
 ### Tehtävät
 
@@ -137,7 +137,7 @@ Esimerkki Body-parametrit:
 }
 ```
 
-Kaikki API-kutsut vaativat Authorization-headerin: `Bearer <access_token>`
+Kaikki API-kutsut vaativat Authorization-headerin: `Bearer <ACCESS_TOKEN>`
 
 ## Admin-paneeli
 
