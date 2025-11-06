@@ -11,7 +11,10 @@ export default function App() {
     setToken(newToken);
   }
 
-  function handleLogout() {
+  function handleLogout(isExpired = false) {
+    if (isExpired) {
+      alert("Your session has expired. Please log in again.");
+    }
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     setToken("");
@@ -26,7 +29,7 @@ export default function App() {
 
       const isValid = await verifyToken(access);
       if (!isValid) {
-        handleLogout();
+        handleLogout(true);
       }
     }
 

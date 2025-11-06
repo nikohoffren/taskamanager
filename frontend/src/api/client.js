@@ -26,7 +26,7 @@ export async function apiRequest(
 
   if (response.status === 401) {
     if (onUnauthorized) {
-      onUnauthorized();
+      onUnauthorized(true);
     }
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.detail || "Unauthorized");
